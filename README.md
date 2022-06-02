@@ -8,9 +8,8 @@ This repository contains a simple DTLS client library for communicating with Spa
 package main
 
 import (
- "log"
- "time"
-
+    "log"
+    "time"
     client "github.com/borud/go-span-client"
 )
 
