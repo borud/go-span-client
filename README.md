@@ -1,6 +1,8 @@
 # go-span-client
 
-This repository contains a simple DTLS client library for communicating with Span as an IoT device. If you want to access the Span API for managing Span resources, the library you want is the [Go Span API Client](https://github.com/lab5e/go-spanapi).
+This repository contains a simple client library for communicating with Span as an IoT device. If you want to access the Span API for managing Span resources, the library you want is the [Go Span API Client](https://github.com/lab5e/go-spanapi).  
+
+This library uses the [Pion DTLS library](https://pkg.go.dev/github.com/pion/dtls/v2).
 
 [![Godoc](http://img.shields.io/badge/godoc-reference-blue.svg?style=flat)](https://pkg.go.dev/github.com/borud/go-span-client)
 
