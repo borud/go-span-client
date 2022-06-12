@@ -10,7 +10,8 @@ import (
 )
 
 func main() {
-	client, err := client.COAPConnect(client.NewDefaultConfig())
+	config := client.NewDefaultConfig()
+	client, err := client.COAPConnect(config)
 	if err != nil {
 		log.Fatalf("COAPConnect failed: %v", err)
 	}
@@ -18,15 +19,19 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 	defer cancel()
 
-	res, err := client.Get(ctx, "")
+	// buf := bytes.NewReader([]byte("hello"))
+	// msg, err := client.Post(ctx, "/", message.TextPlain, buf)
+	res, err := client.Get(ctx, "/")
 	if err != nil {
-		log.Fatalf("get failed: %v", err)
+		log.Fatalf("post failed: %v", err)
 	}
+
+	log.Printf("result: %+v", res)
 
 	body, err := res.ReadBody()
 	if err != nil {
 		log.Fatalf("ReadBody failed: %v", err)
 	}
 
-	fmt.Println(body)
+	fmt.Printf("len=%d body=[%s]\n", len(body), string(body))
 }

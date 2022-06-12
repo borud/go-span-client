@@ -7,8 +7,25 @@ import (
 	"log"
 	"os"
 	"path"
+	"time"
 
 	"github.com/pion/dtls/v2"
+)
+
+// Config for Client.
+type Config struct {
+	DTLSConfig   *dtls.Config
+	SpanUDPAddr  string
+	SpanCOAPAddr string
+}
+
+const (
+	defaultSpanUDPAddr  = "data.lab5e.com:1234"
+	defaultSpanCOAPAddr = "data.lab5e.com:5684"
+	certsDirFragment    = ".devcli/certs"
+	certFile            = "cert.crt"
+	keyFile             = "key.pem"
+	defaultDTLSTimeout  = 30 * time.Second
 )
 
 // NewDefaultConfig creates a new default configuration.  This requires you to have
@@ -64,6 +81,7 @@ func NewConfig(certBytes []byte, keyBytes []byte) (Config, error) {
 				return context.WithTimeout(context.Background(), defaultDTLSTimeout)
 			},
 		},
-		SpanAddr: defaultSpanAddr,
+		SpanUDPAddr:  defaultSpanUDPAddr,
+		SpanCOAPAddr: defaultSpanCOAPAddr,
 	}, nil
 }

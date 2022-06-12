@@ -1,8 +1,11 @@
 all: vet lint test build
 
-build: coap
+build: coap dtls
 
 coap:
+	@cd cmd/$@ && go build -o ../../bin/$@ --trimpath -tags osusergo,netgo
+
+dtls:
 	@cd cmd/$@ && go build -o ../../bin/$@ --trimpath -tags osusergo,netgo
 
 test:

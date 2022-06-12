@@ -48,20 +48,6 @@ type Client struct {
 	config Config
 }
 
-// Config for Client.
-type Config struct {
-	DTLSConfig *dtls.Config
-	SpanAddr   string
-}
-
-const (
-	defaultSpanAddr    = "data.lab5e.com:1234"
-	certsDirFragment   = ".devcli/certs"
-	certFile           = "cert.crt"
-	keyFile            = "key.pem"
-	defaultDTLSTimeout = 30 * time.Second
-)
-
 // Errors for Client
 var (
 	ErrCannotResolveSpanAddress = errors.New("cannot resolve Span address")
@@ -72,14 +58,14 @@ var (
 
 // Connect client to Span using DTLS
 func Connect(config Config) (*Client, error) {
-	addr, err := net.ResolveUDPAddr("udp", config.SpanAddr)
+	addr, err := net.ResolveUDPAddr("udp", config.SpanUDPAddr)
 	if err != nil {
-		return nil, fmt.Errorf("%w [%s]: %v", ErrCannotResolveSpanAddress, config.SpanAddr, err)
+		return nil, fmt.Errorf("%w [%s]: %v", ErrCannotResolveSpanAddress, config.SpanUDPAddr, err)
 	}
 
 	dtlsConn, err := dtls.Dial("udp", addr, config.DTLSConfig)
 	if err != nil {
-		return nil, fmt.Errorf("%w [%s]: %v", ErrCannotConnect, config.SpanAddr, err)
+		return nil, fmt.Errorf("%w [%s]: %v", ErrCannotConnect, config.SpanUDPAddr, err)
 	}
 
 	return &Client{
